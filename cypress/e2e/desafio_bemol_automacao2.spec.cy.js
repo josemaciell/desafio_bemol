@@ -7,14 +7,13 @@ before(() => {
   cy.clearAllCookies()
 })
 
-// describe('Aplicação alvo: trivago.com.br', function() {
-//   beforeEach(() => {
-//     cy.visit('https://www.trivago.com.br/')
-//   })
+describe('Aplicação alvo: trivago.com.br', function() {
+  beforeEach(() => {
+    cy.visit('https://www.trivago.com.br/') //Acessar o site;
+  })
   
   it('preenche os campos obrigatórios e envia o formulário', function() {
-    cy.visit('https://www.trivago.com.br/') //Acessar o site;
-    cy.contains('Ponto de referência') //Pesquise por Manaus;
+       cy.contains('Ponto de referência') //Pesquise por Manaus;
       .click()
       .type('Manaus')
     cy.get(':nth-child(1) > [data-testid="ssg-element"] > .h-14').click()
@@ -35,26 +34,25 @@ before(() => {
       .select(1)
       .should('have.value', '6')
 
-    cy.contains('ibis budget Manaus').should('be.visible');
-    cy.contains('8.4 - Muito bom').should('be.visible');
-    cy.contains('R$164').should('be.visible');
-
-    cy.contains('Comfort Hotel Manaus').should('be.visible');
-    cy.contains('8.6 - Excelente').should('be.visible');
-    cy.contains('R$188').should('be.visible');
-        
-    //     // Validar a avaliação
-    // cy.get('[data-accommodation="554546"] > .slideout-container_wrapper__cVquW > [data-testid="item"] > .item_subGrid__vJXlf > [data-testid="details-section"] > [data-testid="rating-section"] > [data-testid="aggregate-rating"] > .rating-section_ratingDetails__YAjnN > .rating-section_truncate__7Sl45 > strong > span').should('have.value', '8.6');
-      
-    //     // Validar o valor
-    // cy.get('[data-accommodation="554546"] > .slideout-container_wrapper__cVquW > [data-testid="item"] > .item_subGrid__vJXlf > .item_dealsContainer__RuvUy > [data-testid="standard-dates-area"] > [data-testid="expected-price"] > .StandardDatesArea_fromLabel__YE_Kn > b').should('have.value', 'R$188');
-       
+    cy.get('[data-testid="item"]:first')
+      .find('[itemprop="name"]')
+      .should('have.text', 'ibis budget Manaus')
+    cy.get('[data-testid="expected-price"]:first')
+      // .find('[itemprop="name"]')
+      .should('have.text', 'A partir de R$167')
+    cy.get('[data-testid="rating-section"]:first')
+      .find('[itemprop="ratingValue"]')
+      .should('have.text', '8.4')
+//     cy.contains('ibis budget Manaus').should('be.visible');
+//     cy.contains('8.4 - Muito bom').should('be.visible');
+//     cy.contains('R$164').should('be.visible');
+// // ou
+//     cy.contains('Comfort Hotel Manaus').should('be.visible');
+//     cy.contains('8.6 - Excelente').should('be.visible');
+//     cy.contains('R$188').should('be.visible');
+// // em alguns momentos o 1o da lista estava alternando entre esses dois Hoteis a cima.   
+    
     
   })
+})
 
-  // 1 - Acessar o site;
-  // 2 - Pesquise por Manaus;
-  // 3 - Ordene as opções listadas por “Avaliações e Sugestões”;
-  // 4 - Verifique o primeiro nome da lista;
-  // 5 - Verifique a avaliação;
-  // 6 - Verifique o valor;
